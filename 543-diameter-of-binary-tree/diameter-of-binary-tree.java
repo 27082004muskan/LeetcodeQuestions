@@ -14,25 +14,19 @@
  * }
  */
 class Solution {
-
- int maxDiameter = 0;  // Global variable to track max diameter
-
-    public int height(TreeNode root) {
-        if (root == null) return 0;
-
-        int leftHeight = height(root.left);
-        int rightHeight = height(root.right);
-
-        
-        maxDiameter = Math.max(maxDiameter, leftHeight + rightHeight);
-        return Math.max(leftHeight, rightHeight) + 1;
+    public int height(TreeNode root){
+        if(root==null || (root.left==null && root.right==null)) return 0;
+        return 1+Math.max(height(root.left), height(root.right));
     }
-
     public int diameterOfBinaryTree(TreeNode root) {
-        height(root);
-        return maxDiameter;
+         if(root==null || (root.left==null && root.right==null)) return 0;
+        int leftAns=diameterOfBinaryTree(root.left);
+          int rightAns=diameterOfBinaryTree(root.right);
+          int mid=height(root.left)+height(root.right);
+          if(root.right!=null) mid++;
+          if(root.left!=null) mid++;
+
+          int max=Math.max(leftAns,Math.max(rightAns, mid));
+          return max;
     }
-
-
-    
 }
