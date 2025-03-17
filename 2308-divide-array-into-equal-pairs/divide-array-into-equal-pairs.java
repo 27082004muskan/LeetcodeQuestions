@@ -16,13 +16,32 @@ class Solution {
     // }
   
 
-        Arrays.sort(nums);
-        for(int i = 0 ; i<nums.length ; i += 2){
-            if(nums[i] != nums[i+1]){
-                return false ;
-            }
+        // Arrays.sort(nums);
+        // for(int i = 0 ; i<nums.length ; i += 2){
+        //     if(nums[i] != nums[i+1]){
+        //         return false ;
+        //     }
          
+        // }
+        // return true  ;
+
+
+        HashMap<Integer, Integer> freq = new HashMap<>();
+        
+        // Count the frequency of each element
+        for (int num : nums) {
+            freq.put(num, freq.getOrDefault(num, 0) + 1);
         }
-        return true  ;
+        
+        // Check if all frequencies are even
+        for (int count : freq.values()) {
+            if (count % 2 != 0) {
+                return false;
+            }
+        }
+        
+        return true;
+
+
     }
 }
