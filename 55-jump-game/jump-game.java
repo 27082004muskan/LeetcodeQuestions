@@ -52,21 +52,37 @@
 
 //------------------------BOTTOM UP ----------------
 
+// class Solution {
+//     public boolean canJump(int[] nums) {
+//         int n = nums.length;
+//         boolean[] t = new boolean[n];
+//         t[0] = true; // Starting position is reachable
+
+//         for (int i = 1; i < n; i++) {
+//             for (int j = i - 1; j >= 0; j--) {
+//                 if (j + nums[j] >= i && t[j]) {
+//                     t[i] = true;
+//                     break;
+//                 }
+//             }
+//         }
+
+//         return t[n - 1];
+//     }
+// }
+
+//----------------OPTIMAL ---------------
+
 class Solution {
     public boolean canJump(int[] nums) {
+        int maxReachable =0;
         int n = nums.length;
-        boolean[] t = new boolean[n];
-        t[0] = true; // Starting position is reachable
-
-        for (int i = 1; i < n; i++) {
-            for (int j = i - 1; j >= 0; j--) {
-                if (j + nums[j] >= i && t[j]) {
-                    t[i] = true;
-                    break;
-                }
+        for(int i =0;i<n;i++){
+            if(i>maxReachable ){
+                return false ;
             }
+            maxReachable = Math.max(maxReachable , nums[i]+i);
         }
-
-        return t[n - 1];
+        return true ;
     }
 }
