@@ -23,29 +23,50 @@
 
 // -----------------------MEMORIZATION -------------
 
+// class Solution {
+//     int[] memo;
+
+//     public boolean solve(int[] nums, int n, int idx) {
+//         if (idx == n - 1) return true;
+//         if (idx >= n) return false;
+//         if (memo[idx] != -1) return memo[idx] == 1;
+
+//         for (int i = 1; i <= nums[idx]; i++) {
+//             if (solve(nums, n, idx + i)) {
+//                 memo[idx] = 1;
+//                 return true;
+//             }
+//         }
+
+//         memo[idx] = 0;
+//         return false;
+//     }
+
+//     public boolean canJump(int[] nums) {
+//         int n = nums.length;
+//         memo = new int[n];
+//         Arrays.fill(memo, -1);
+//         return solve(nums, n, 0);
+//     }
+// }
+
+//------------------------BOTTOM UP ----------------
+
 class Solution {
-    int[] memo;
+    public boolean canJump(int[] nums) {
+        int n = nums.length;
+        boolean[] t = new boolean[n];
+        t[0] = true; // Starting position is reachable
 
-    public boolean solve(int[] nums, int n, int idx) {
-        if (idx == n - 1) return true;
-        if (idx >= n) return false;
-        if (memo[idx] != -1) return memo[idx] == 1;
-
-        for (int i = 1; i <= nums[idx]; i++) {
-            if (solve(nums, n, idx + i)) {
-                memo[idx] = 1;
-                return true;
+        for (int i = 1; i < n; i++) {
+            for (int j = i - 1; j >= 0; j--) {
+                if (j + nums[j] >= i && t[j]) {
+                    t[i] = true;
+                    break;
+                }
             }
         }
 
-        memo[idx] = 0;
-        return false;
-    }
-
-    public boolean canJump(int[] nums) {
-        int n = nums.length;
-        memo = new int[n];
-        Arrays.fill(memo, -1);
-        return solve(nums, n, 0);
+        return t[n - 1];
     }
 }
